@@ -1,12 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { ApolloProvider } from "@apollo/client";
+import { BrowserRouter } from 'react-router-dom';
+
+import { client } from "./apollo";
+import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
