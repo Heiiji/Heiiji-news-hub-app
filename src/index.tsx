@@ -5,14 +5,14 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { client } from "./apollo";
 import './index.scss';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import Router from "./Router";
 
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
         <BrowserRouter>
-            <App />
+            <Router />
         </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>,
