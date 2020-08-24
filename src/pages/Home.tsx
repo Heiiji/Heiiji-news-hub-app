@@ -1,9 +1,14 @@
 import React from "react";
+import HomeTemplate from "../templates/Home";
+import Navigation from "../organisms/Navigation";
 
-const _ = () => {
+const Home = () => {
     return (
-        <div/>
+        <div>
+            <Navigation/>
+            <HomeTemplate/>
+        </div>
     );
 }
 
-export default _;
+export default Home;
