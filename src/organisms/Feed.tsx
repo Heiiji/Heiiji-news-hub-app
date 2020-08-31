@@ -4,6 +4,7 @@ import ArticleCard from "../molecules/ArticleCard";
 import styled from "styled-components";
 
 const StyledFeed = styled.div`
+    padding-top: 100px;
     text-align: center;
     display: flex;
     flex-direction: column;
