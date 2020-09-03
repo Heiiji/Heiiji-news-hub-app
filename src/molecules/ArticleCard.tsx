@@ -2,7 +2,7 @@ import React from "react";
 import {IArticle} from "../apollo/article/interface";
 import styled from "styled-components";
 
-const Article = styled.div`
+const Article = styled.a`
     transition: 0.3s;
     cursor: pointer;
     display: flex;
@@ -13,6 +13,7 @@ const Article = styled.div`
     width: 90%;
     max-width: 800px;
     margin: 10px;
+    text-decoration: none !important;
     img {
         object-fit: cover;
         height: auto;
@@ -35,11 +36,11 @@ type ArticleCardProps = {
 
 const ArticleCard = ({ article }: ArticleCardProps) => {
     return (
-        <Article>
+        <Article href={article.url} target="_blank">
             <img alt="illustration" src={article.image} width={100} />
             <div className="description">
                 <h5>{article.title}</h5>
-                <p>{article.description}</p>
+                <p>{article.description.length <= 150 ? article.description : article.description.substring(0, 150) + "..."}</p>
             </div>
         </Article>
     );
