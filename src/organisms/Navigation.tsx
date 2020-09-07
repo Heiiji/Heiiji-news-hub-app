@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import history from "../_helpers/history";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee, faHome, faPlus } from "@fortawesome/free-solid-svg-icons";
 
@@ -39,16 +40,21 @@ const NavBtn = styled.div`
 `;
 
 const Navigation = () => {
+
+    const onRedirect = (link: string) => {
+        history.push(link);
+    }
+
     return (
         <NavBar>
             <div style={{ height: "fit-content" }}>
                 <FontAwesomeIcon color="white" icon={faCoffee} />
             </div>
             <div className="menu">
-                <NavBtn>
+                <NavBtn onClick={() => onRedirect("/")}>
                     <FontAwesomeIcon color="white" icon={faHome} />
                 </NavBtn>
-                <NavBtn>
+                <NavBtn onClick={() => onRedirect("/search")}>
                     <FontAwesomeIcon color="white" icon={faPlus} />
                 </NavBtn>
             </div>

@@ -1,9 +1,12 @@
 import React from "react";
+import Navigation from "../organisms/Navigation";
 
-const _ = () => {
+const Search = () => {
     return (
-        <div/>
+        <div>
+            <Navigation/>
+        </div>
     );
 }
 
-export default _;
+export default Search;

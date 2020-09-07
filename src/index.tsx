@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from "@apollo/client";
-import { BrowserRouter } from 'react-router-dom';
+import { Router as BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from "styled-components";
 import { darkTheme } from "./styles/theme";
 
@@ -10,10 +10,12 @@ import './index.scss';
 import * as serviceWorker from './serviceWorker';
 import Router from "./Router";
 
+import history from "./_helpers/history";
+
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-        <BrowserRouter>
+        <BrowserRouter history={history}>
           <ThemeProvider theme={darkTheme}>
             <Router />
           </ThemeProvider>
