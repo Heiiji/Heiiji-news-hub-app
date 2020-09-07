@@ -7,13 +7,16 @@ const Article = styled.a`
     cursor: pointer;
     display: flex;
     flex-direction: row;
-    border: 1px solid rgba(10, 10, 10, 0.2);
     border-radius: 10px;
     overflow: hidden;
     width: 90%;
     max-width: 800px;
     margin: 10px;
     text-decoration: none !important;
+    background-color: #2B374A;
+    h5 {
+        color: ${({ theme }) => theme.primaryColor};
+    }
     img {
         object-fit: cover;
         height: auto;
@@ -26,7 +29,7 @@ const Article = styled.a`
         }
     }
     &:hover {
-        box-shadow: 0 0 5px rgba(10, 10, 10, 0.2);
+        box-shadow: 0 0 10px rgba(10, 10, 10, 0.8);
     }
 `;
 
@@ -40,7 +43,7 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
             <img alt="illustration" src={article.image} width={100} />
             <div className="description">
                 <h5>{article.title}</h5>
-                <p>{article.description.length <= 150 ? article.description : article.description.substring(0, 150) + "..."}</p>
+                <p>{article.description.length <= 150 ? article.description : (article.description.substring(0, 150) + "...")}</p>
             </div>
         </Article>
     );

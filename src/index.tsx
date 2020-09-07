@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from "@apollo/client";
 import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from "styled-components";
+import { darkTheme } from "./styles/theme";
 
 import { client } from "./apollo";
 import './index.scss';
@@ -12,7 +14,9 @@ ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
         <BrowserRouter>
+          <ThemeProvider theme={darkTheme}>
             <Router />
+          </ThemeProvider>
         </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>,

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee, faHome, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const NavBar = styled.div`
-    background-color: #121212;
+    background-color: #161A1A;
     width: 40px;
     position: fixed;
     flex-direction: column;
