@@ -19,6 +19,7 @@ const StyledSearch = styled.div`
 `;
 
 const Search = () => {
+
     return (
         <StyledSearch>
             <div className="corpus">
