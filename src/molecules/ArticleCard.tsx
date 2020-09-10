@@ -40,7 +40,7 @@ type ArticleCardProps = {
 const ArticleCard = ({ article }: ArticleCardProps) => {
     return (
         <Article href={article.url} target="_blank">
-            <img alt="illustration" src={article.image} width={100} />
+            <img alt="illustration" src={article.image ? article.image : "/media/images/rss.png"} width={100} />
             <div className="description">
                 <h5>{article.title}</h5>
                 <p>{article.description.length <= 150 ? article.description : (article.description.substring(0, 150) + "...")}</p>
