@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 interface IStyledProps {
-    onClick: () => void,
+    onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
     active: Boolean
 }
 
@@ -65,7 +65,7 @@ const Modal = ({ children, title, toggle, active }: ModalProps) => {
     return (
         <StyledContainer active={active} onClick={() => toggle()}>
             <BackgroundModal active={active} onClick={() => toggle()}/>
-            <StyledModal active={active} onClick={() => toggle()}>
+            <StyledModal active={active} onClick={(ev) => ev.stopPropagation()}>
                 <h2>{ title }</h2>
                 <div className="corpus">
                     { children }

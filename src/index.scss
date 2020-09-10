@@ -17,3 +17,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.input-text {
+  background-color: transparent;
+  border-radius: 20px;
+  padding: 5px 10px;
+  border: 1px solid rgba(200, 200, 200, 0.5);
+  color: white;
+
+  &:active {
+    border: 1px solid rgba(200, 200, 200, 0.8);
+  }
+  &:focus {
+    border: 1px solid rgba(200, 200, 200, 0.8);
+  }
+}
