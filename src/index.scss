@@ -19,11 +19,14 @@ code {
 }
 
 .input-text {
-  background-color: transparent;
-  border-radius: 20px;
-  padding: 5px 10px;
-  border: 1px solid rgba(200, 200, 200, 0.5);
-  color: white;
+  background-color: #282834;
+  border-radius: 3px;
+  border: none;
+  padding: 10px 15px;
+  color: rgba(240, 240, 240, 0.9);
+  width: 100%;
+  display: block;
+  margin: 5px;
 
   &:active {
     border: 1px solid rgba(200, 200, 200, 0.8);

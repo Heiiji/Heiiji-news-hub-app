@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import history from "../_helpers/history";
+import Auth from "./Auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee, faHome, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCoffee, faHome, faPlus, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 const NavBar = styled.div`
     background-color: #161A1A;
@@ -40,25 +41,32 @@ const NavBtn = styled.div`
 `;
 
 const Navigation = () => {
+    const [auth, setAuth] = useState(false);
 
     const onRedirect = (link: string) => {
         history.push(link);
     }
 
     return (
-        <NavBar>
-            <div style={{ height: "fit-content" }}>
-                <FontAwesomeIcon color="white" icon={faCoffee} />
-            </div>
-            <div className="menu">
-                <NavBtn onClick={() => onRedirect("/")}>
-                    <FontAwesomeIcon color="white" icon={faHome} />
-                </NavBtn>
-                <NavBtn onClick={() => onRedirect("/search")}>
-                    <FontAwesomeIcon color="white" icon={faPlus} />
-                </NavBtn>
-            </div>
-        </NavBar>
+        <>
+            <NavBar>
+                <div style={{ height: "fit-content" }}>
+                    <FontAwesomeIcon color="white" icon={faCoffee} />
+                </div>
+                <div className="menu">
+                    <NavBtn onClick={() => onRedirect("/")}>
+                        <FontAwesomeIcon color="white" icon={faHome} />
+                    </NavBtn>
+                    <NavBtn onClick={() => onRedirect("/search")}>
+                        <FontAwesomeIcon color="white" icon={faPlus} />
+                    </NavBtn>
+                </div>
+                <div onClick={() => setAuth(!auth)} style={{ height: "fit-content" }}>
+                    <FontAwesomeIcon color="white" icon={faUserCircle} />
+                </div>
+            </NavBar>
+            <Auth active={auth} toggle={() => setAuth(!auth)} />
+        </>
     );
 }
 

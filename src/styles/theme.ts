@@ -5,11 +5,13 @@ declare module "styled-components" {
     textColor: string;
     primaryColor: string;
     secondaryColor: string;
+    tertiaryColor: string;
   }
 }
 
 export const darkTheme: DefaultTheme = {
   textColor: "#fff",
 	primaryColor: "#38BCFF",
-	secondaryColor: "#2B374A",
+  secondaryColor: "#31313C",
+  tertiaryColor: "#282834",
 };
