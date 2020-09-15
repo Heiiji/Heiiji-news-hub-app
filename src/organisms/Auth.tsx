@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import StyledInput from "../styles/components/form/Input";
+import StyledButton from "../styles/components/form/Button";
 import styled from "styled-components";
 
 interface IStyledProps {
@@ -18,7 +20,7 @@ const StyledModal = styled.div.attrs<IStyledProps>(({onClick}) => ({
     min-width: 400px;
     text-align: center;
 
-    h2 {
+    h3 {
         padding: 20px 20px 10px 20px;
     }
 
@@ -26,7 +28,6 @@ const StyledModal = styled.div.attrs<IStyledProps>(({onClick}) => ({
         padding: 10px 20px 20px 20px;
     }
 `;
-
 
 const BackgroundModal = styled.div.attrs<IStyledProps>(({onClick}) => ({
     onClick: onClick
@@ -60,18 +61,40 @@ type AuthProps = {
 };
 
 const Auth = ({ toggle, active }: AuthProps) => {
+    const [hasAccount, setHasAccount] = useState(true);
+
+    const switchHasAccount = (ev: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+        if (ev) {
+            ev.preventDefault();
+        }
+        setHasAccount(!hasAccount);
+    }
+
     return (
         <StyledContainer active={active} onClick={() => toggle()}>
             <BackgroundModal active={active} onClick={() => toggle()}/>
             <StyledModal active={active} onClick={(ev) => ev.stopPropagation()}>
-                <h2>Login</h2>
-                <form className="corpus">
-                    <input type="text" placeholder="Email adress" className="input-text" />
-                    <input type="password" placeholder="Password" className="input-text" />
-                    <button>
-                        LOGIN
-                    </button>
-                </form>
+                <h3>{ hasAccount ? "CONNECTION" : "SIGNUP" }</h3>
+                {
+                    hasAccount ?
+                    <form className="corpus">
+                        <StyledInput type="text" placeholder="Email adress" className="my-3" />
+                        <StyledInput type="password" placeholder="Password" className="my-3" />
+                        <StyledButton className="my-3">
+                            LOGIN
+                            <span className="button-alt-text" onClick={switchHasAccount}>Céer un compte</span>
+                        </StyledButton>
+                    </form> :
+                    <form className="corpus">
+                        <StyledInput type="text" placeholder="Email adress" className="my-3" />
+                        <StyledInput type="password" placeholder="Password" className="my-3" />
+                        <StyledInput type="password" placeholder="Confirm password" className="my-3" />
+                        <StyledButton className="my-3">
+                            REGISTER
+                            <span className="button-alt-text" onClick={switchHasAccount}>Se connecter</span>
+                        </StyledButton>
+                    </form>
+                }
             </StyledModal>
         </StyledContainer>
     );
