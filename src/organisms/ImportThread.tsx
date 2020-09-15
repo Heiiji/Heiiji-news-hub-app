@@ -12,7 +12,7 @@ const ImportThread = () => {
     const _onSubmitRss = (ev: React.FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
         createThread({ variables: { url: rssUrl }}).then(response => {
-            let thread = response.data.createThread;
+            // let thread = response.data.createThread;
             setRssUrl("");
             setAddRss(false);
         }).catch(err => {

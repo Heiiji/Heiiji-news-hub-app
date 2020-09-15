@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import StyledInput from "../styles/components/form/Input";
 import StyledButton from "../styles/components/form/Button";
+import { useMutation } from "@apollo/client";
+import { LOGIN, SIGNUP } from "../apollo/user/actions";
 import styled from "styled-components";
 
 interface IStyledProps {
@@ -62,12 +64,40 @@ type AuthProps = {
 
 const Auth = ({ toggle, active }: AuthProps) => {
     const [hasAccount, setHasAccount] = useState(true);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirm, setConfirm] = useState("");
+
+    const [login] = useMutation(LOGIN);
+    const [signup] = useMutation(SIGNUP);
 
     const switchHasAccount = (ev: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
         if (ev) {
             ev.preventDefault();
         }
         setHasAccount(!hasAccount);
+    }
+
+    const onLogin = (ev: React.FormEvent<HTMLFormElement>) => {
+        ev.preventDefault();
+        if (email && password) {
+            login({ variables: { email, password }}).then(response => {
+                console.log(response.data.signup);
+            }).catch(err => {
+                console.error(err);
+            })
+        }
+    }
+
+    const onSignup = (ev: React.FormEvent<HTMLFormElement>) => {
+        ev.preventDefault();
+        if (email && password && password === confirm) {
+            signup({ variables: { email, password, username: "default" }}).then(response => {
+                console.log(response.data);
+            }).catch(err => {
+                console.error(err);
+            })
+        }
     }
 
     return (
@@ -77,18 +107,18 @@ const Auth = ({ toggle, active }: AuthProps) => {
                 <h3>{ hasAccount ? "CONNECTION" : "SIGNUP" }</h3>
                 {
                     hasAccount ?
-                    <form className="corpus">
-                        <StyledInput type="text" placeholder="Email adress" className="my-3" />
-                        <StyledInput type="password" placeholder="Password" className="my-3" />
+                    <form onSubmit={onLogin} className="corpus">
+                        <StyledInput value={email} type="text" placeholder="Email adress" className="my-3" onChange={ev => setEmail(ev.target.value.trim())} />
+                        <StyledInput value={password} type="password" placeholder="Password" className="my-3" onChange={ev => setPassword(ev.target.value)} />
                         <StyledButton className="my-3">
                             LOGIN
                             <span className="button-alt-text" onClick={switchHasAccount}>Céer un compte</span>
                         </StyledButton>
                     </form> :
-                    <form className="corpus">
-                        <StyledInput type="text" placeholder="Email adress" className="my-3" />
-                        <StyledInput type="password" placeholder="Password" className="my-3" />
-                        <StyledInput type="password" placeholder="Confirm password" className="my-3" />
+                    <form onSubmit={onSignup} className="corpus">
+                        <StyledInput value={email} type="text" placeholder="Email adress" className="my-3" onChange={ev => setEmail(ev.target.value.trim())} />
+                        <StyledInput value={password} type="password" placeholder="Password" className="my-3" onChange={ev => setPassword(ev.target.value)} />
+                        <StyledInput value={confirm} type="password" placeholder="Confirm password" className="my-3" onChange={ev => setConfirm(ev.target.value)} />
                         <StyledButton className="my-3">
                             REGISTER
                             <span className="button-alt-text" onClick={switchHasAccount}>Se connecter</span>
