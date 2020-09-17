@@ -25,3 +25,9 @@ mutation($oldPassword: String!, $password: String!) {
     }
   }
 `;
+
+export const IS_LOGGED_IN = gql`
+  query IsUserLoggedIn {
+    isLoggedIn @client
+  }
+`;

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import history from "../_helpers/history";
+import {useQuery} from "@apollo/client";
 import Auth from "./Auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee, faHome, faPlus, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCoffee, faHome, faPlus, faUserCircle, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { IS_LOGGED_IN } from "../apollo/user/actions";
 
 const NavBar = styled.div`
     background-color: #161A1A;
@@ -42,9 +44,19 @@ const NavBtn = styled.div`
 
 const Navigation = () => {
     const [auth, setAuth] = useState(false);
+    const logged = useQuery(IS_LOGGED_IN);
+
+    if (logged.loading) {
+        return <p> loading</p>;
+    }
 
     const onRedirect = (link: string) => {
         history.push(link);
+    }
+
+    const onLoggout = () => {
+        localStorage.removeItem("token");
+        window.location.reload(false);
     }
 
     return (
@@ -61,9 +73,13 @@ const Navigation = () => {
                         <FontAwesomeIcon color="white" icon={faPlus} />
                     </NavBtn>
                 </div>
-                <div onClick={() => setAuth(!auth)} style={{ height: "fit-content" }}>
-                    <FontAwesomeIcon color="white" icon={faUserCircle} />
-                </div>
+                {
+                    logged.data.isLoggedIn ? <div onClick={onLoggout} style={{ height: "fit-content", cursor: "pointer" }}>
+                        <FontAwesomeIcon color="white" icon={faSignOutAlt} />
+                    </div> : <div onClick={() => setAuth(!auth)} style={{ height: "fit-content", cursor: "pointer" }}>
+                        <FontAwesomeIcon color="white" icon={faUserCircle} />
+                    </div>
+                }
             </NavBar>
             <Auth active={auth} toggle={() => setAuth(!auth)} />
         </>

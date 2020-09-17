@@ -82,7 +82,8 @@ const Auth = ({ toggle, active }: AuthProps) => {
         ev.preventDefault();
         if (email && password) {
             login({ variables: { email, password }}).then(response => {
-                console.log(response.data.signup);
+                localStorage.setItem("token", response.data.login.token);
+                window.location.reload(false);
             }).catch(err => {
                 console.error(err);
             })
