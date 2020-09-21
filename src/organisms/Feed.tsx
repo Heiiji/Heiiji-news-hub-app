@@ -12,14 +12,15 @@ const StyledFeed = styled.div`
 `;
 
 type FeedProps = {
-    feed: Array<IArticle>
+    feed: Array<IArticle>,
+    onSelect: Function
 };
 
-const Feed = ({ feed }: FeedProps) => {
+const Feed = ({ feed, onSelect }: FeedProps) => {
     return (
         <StyledFeed>
             {
-                feed.map((article) => <ArticleCard key={article.title + article.url} article={article} />)
+                feed.map((article) => <ArticleCard onSelect={onSelect} key={article.title + article.url} article={article} />)
             }
         </StyledFeed>
     );
