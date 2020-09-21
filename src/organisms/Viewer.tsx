@@ -3,11 +3,18 @@ import styled from "styled-components";
 import { IArticle } from "../apollo/article/interface";
 
 const StyledViewer = styled.div`
-    padding-top: 100px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(10, 10, 10, 0.8);
+
+    iframe {
+        width: calc(100% - 20px);
+        height: calc(100% - 20px);
+    }
 `;
 
 type ViewerProps = {
@@ -16,14 +23,12 @@ type ViewerProps = {
 
 const Viewer = ({ article }: ViewerProps) => {
     return (
-        <div>
+        <StyledViewer>
             <iframe id="inlineFrameExample"
                 title="viewer"
-                width="300"
-                height="200"
                 src={article.url}>
             </iframe>
-        </div>
+        </StyledViewer>
     );
 }
 
