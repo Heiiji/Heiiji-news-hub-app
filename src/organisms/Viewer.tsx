@@ -12,19 +12,40 @@ const StyledViewer = styled.div`
     background-color: rgba(10, 10, 10, 0.8);
 
     iframe {
+        position: relative;
         width: calc(100% - 20px);
         height: calc(100% - 20px);
+        z-index: 2;
+    }
+    .toolbar {
+        position: absolute;
+        top: 0;
+        height:20px;
+        background-color: white;
+        right: 10px;
+    }
+
+    .spinner-border {
+        z-index: 1;
+        position: relative;
+        top: 49%;
+        left: 49%;
     }
 `;
 
 type ViewerProps = {
-    article: IArticle
+    article: IArticle,
+    onClose: Function
 };
 
-const Viewer = ({ article }: ViewerProps) => {
+const Viewer = ({ article, onClose }: ViewerProps) => {
     return (
-        <StyledViewer>
-            <iframe id="inlineFrameExample"
+        <StyledViewer onClick={() => onClose()}>
+            <div className="spinner-border text-primary" role="status"></div>
+            <div onClick={ev => ev.stopPropagation()} className="toolbar">
+                <button onClick={() => onClose()}>X</button>
+            </div>
+            <iframe onClick={ev => ev.stopPropagation()} id="inlineFrameExample"
                 title="viewer"
                 src={article.url}>
             </iframe>

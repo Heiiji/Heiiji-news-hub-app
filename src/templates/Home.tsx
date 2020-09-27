@@ -24,11 +24,15 @@ const Home = () => {
         </p>;
     }
 
+    const onClose = () => {
+        setSelection(undefined);
+    }
+
     return (
         <div>
             <Feed onSelect={onSelect} feed={data.articles}/>
             {
-                selection && <Viewer article={selection} />
+                selection && <Viewer onClose={onClose} article={selection} />
             }
         </div>
     );
