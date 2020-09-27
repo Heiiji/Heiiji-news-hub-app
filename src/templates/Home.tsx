@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import {useQuery} from "@apollo/client";
 import {GET_ALL_ARTICLES} from "../apollo/article/actions";
 import Feed from "../organisms/Feed";
+import Viewer from "../organisms/Viewer";
+import { IArticle } from "../apollo/article/interface";
 
 const Home = () => {
     const { loading, data } = useQuery(GET_ALL_ARTICLES);
+    const [selection, setSelection] = useState<undefined | IArticle>();
+
+    const onSelect = (news: IArticle) => {
+        setSelection(news);
+    }
 
     if (loading) {
         return <p>
@@ -17,9 +24,16 @@ const Home = () => {
         </p>;
     }
 
+    const onClose = () => {
+        setSelection(undefined);
+    }
+
     return (
         <div>
-            <Feed feed={data.articles}/>
+            <Feed onSelect={onSelect} feed={data.articles}/>
+            {
+                selection && <Viewer onClose={onClose} article={selection} />
+            }
         </div>
     );
 }

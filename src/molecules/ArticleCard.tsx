@@ -2,7 +2,7 @@ import React from "react";
 import {IArticle} from "../apollo/article/interface";
 import styled from "styled-components";
 
-const Article = styled.a`
+const Article = styled.div`
     transition: 0.3s;
     cursor: pointer;
     display: flex;
@@ -34,12 +34,13 @@ const Article = styled.a`
 `;
 
 type ArticleCardProps = {
-    article: IArticle
+    article: IArticle,
+    onSelect: Function
 };
 
-const ArticleCard = ({ article }: ArticleCardProps) => {
+const ArticleCard = ({ article, onSelect }: ArticleCardProps) => {
     return (
-        <Article href={article.url} target="_blank">
+        <Article onClick={() => onSelect(article)}>
             <img alt="illustration" src={article.image ? article.image : "/media/images/rss.png"} width={100} />
             <div className="description">
                 <h5>{article.title}</h5>
