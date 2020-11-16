@@ -10,7 +10,8 @@ const Home = () => {
     const [selection, setSelection] = useState<undefined | IArticle>();
 
     const onSelect = (news: IArticle) => {
-        setSelection(news);
+        window.open(news.url, "_blank");
+        // setSelection(news);
     }
 
     if (loading) {

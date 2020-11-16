@@ -2,8 +2,8 @@ import {ApolloClient, HttpLink, InMemoryCache} from '@apollo/client';
 
 const cache = new InMemoryCache();
 
-const API_BASE_URL = "https://api.centre-actu.app/graphql";
-// const API_BASE_URL = "http://localhost:3001/graphql";
+// const API_BASE_URL = "https://api.centre-actu.app/graphql";
+const API_BASE_URL = "http://localhost:3001/graphql";
 
 const token = localStorage.getItem("token");
 
