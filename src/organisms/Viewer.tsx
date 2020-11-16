@@ -31,6 +31,14 @@ const StyledViewer = styled.div`
         top: 49%;
         left: 49%;
     }
+
+    @media screen and (max-width: 1000px) {
+        padding: 0px;
+        iframe {
+            width: 100%;
+            height: 100%;
+        }
+    }
 `;
 
 type ViewerProps = {

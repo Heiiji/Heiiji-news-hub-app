@@ -14,6 +14,8 @@ const Article = styled.div`
     margin: 10px;
     text-decoration: none !important;
     background-color: #2B374A;
+    width: 100%;
+    max-width: 800px;
     h5 {
         color: ${({ theme }) => theme.primaryColor};
     }

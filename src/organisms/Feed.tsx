@@ -7,8 +7,10 @@ const StyledFeed = styled.div`
     padding-top: 100px;
     text-align: center;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
 `;
 
 type FeedProps = {
