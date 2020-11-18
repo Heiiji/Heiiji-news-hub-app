@@ -6,7 +6,8 @@ export const GET_ALL_ARTICLES = gql`
             title,
             description,
             image,
-            url
+            url,
+            date
         }
     }
 `;

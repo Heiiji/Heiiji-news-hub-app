@@ -1,6 +1,7 @@
 import React from "react";
 import {IArticle} from "../apollo/article/interface";
 import styled from "styled-components";
+import moment from 'moment';
 
 const Article = styled.div`
     transition: 0.3s;
@@ -41,11 +42,17 @@ type ArticleCardProps = {
 };
 
 const ArticleCard = ({ article, onSelect }: ArticleCardProps) => {
+    const milliseconds = article.date // 1575909015000
+
+    const dateObject = new Date(milliseconds)
+
+    const humanDateFormat = dateObject.toLocaleString();
     return (
         <Article onClick={() => onSelect(article)}>
             <img alt="illustration" src={article.image ? article.image : "/media/images/rss.png"} width={100} />
             <div className="description">
                 <h5>{article.title}</h5>
+                <small>{humanDateFormat}</small>
                 <p>{article.description.length <= 150 ? article.description : (article.description.substring(0, 150) + "...")}</p>
             </div>
         </Article>
