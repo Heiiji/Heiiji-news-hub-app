@@ -39,7 +39,7 @@ const Article = styled.div`
 
 type ArticleCardProps = {
     article: IArticle,
-    onSelect: Function
+    onSelect?: Function
 };
 
 const ArticleCard = ({ article, onSelect }: ArticleCardProps) => {
@@ -53,9 +53,7 @@ const ArticleCard = ({ article, onSelect }: ArticleCardProps) => {
 
     const _onClick = () => {
         let id = article.id;
-        setActiveView({ variables: { id }}).then(() => {
-            console.log("view has been set : ", id);
-        }).catch(err => {
+        setActiveView({ variables: { id }}).catch(err => {
             console.error(err);
         })
         if (onSelect) {

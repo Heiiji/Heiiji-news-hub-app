@@ -18,6 +18,10 @@ const httpLink = new HttpLink({
 });
 
 const _onSetActiveView = (id:String) => {
+    if (!id) {
+        activeView = null;
+        return;
+    }
     client.query({query: GET_ARTICLE, variables: {id}}).then(result => {
         activeView = result.data.article;
     });

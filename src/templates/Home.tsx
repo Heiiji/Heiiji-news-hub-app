@@ -14,11 +14,6 @@ const Home = () => {
         console.log(query.get('view'));
       }, []);
 
-    const onSelect = (news: IArticle) => {
-        // window.open(news.url, "_blank");
-        setSelection(news);
-    }
-
     if (loading) {
         return <p>
             Loading
@@ -30,16 +25,10 @@ const Home = () => {
         </p>;
     }
 
-    const onClose = () => {
-        setSelection(undefined);
-    }
-
     return (
         <div>
-            <Feed onSelect={onSelect} feed={data.articles}/>
-            {
-                selection && <Viewer onClose={onClose} article={selection} />
-            }
+            <Feed feed={data.articles}/>
+            <Viewer/>
         </div>
     );
 }

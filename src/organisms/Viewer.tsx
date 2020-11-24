@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import {useQuery, useSubscription} from "@apollo/client";
-import { GET_ACTIVE_VIEW } from "../apollo/viewer/actions";
-import { IArticle } from "../apollo/article/interface";
+import {useQuery, useMutation} from "@apollo/client";
+import { GET_ACTIVE_VIEW, SET_ACTIVE_VIEW } from "../apollo/viewer/actions";
 
 const StyledViewer = styled.div`
     position: fixed;
@@ -42,25 +41,31 @@ const StyledViewer = styled.div`
     }
 `;
 
-type ViewerProps = {
-    article: IArticle,
-    onClose: Function
-};
+const Viewer = () => {
+    const [setActiveView] = useMutation(SET_ACTIVE_VIEW);
+    const { data } = useQuery(GET_ACTIVE_VIEW, {
+        pollInterval: 1000
+    });
 
-const Viewer = ({ onClose, article }: ViewerProps) => {
-    const { loading, data } = useQuery(GET_ACTIVE_VIEW);
+    const _onClose = () => {
+        setActiveView().catch(err => {
+            console.error(err);
+        })
+    }
 
-    console.log(data);
+    if (!data || !data.activeView) {
+        return <div/>;
+    }
 
     return (
         <StyledViewer>
             <div className="spinner-border text-primary" role="status"></div>
             <div onClick={ev => ev.stopPropagation()} className="toolbar">
-                <button onClick={() => onClose()}>X</button>
+                <button onClick={_onClose}>X</button>
             </div>
             <iframe onClick={ev => ev.stopPropagation()} id="inlineFrameExample"
                 title="viewer"
-                src={article.url}>
+                src={data.activeView.url}>
             </iframe>
         </StyledViewer>
     );

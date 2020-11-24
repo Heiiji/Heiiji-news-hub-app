@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const SET_ACTIVE_VIEW = gql`
-  mutation setActiveView($id: String!) {
+  mutation setActiveView($id: String) {
       setActiveView(input: { id: $id }) @client
   }
 `;
