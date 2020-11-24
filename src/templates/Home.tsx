@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {useQuery} from "@apollo/client";
 import {GET_ALL_ARTICLES} from "../apollo/article/actions";
 import Feed from "../organisms/Feed";
@@ -9,9 +9,14 @@ const Home = () => {
     const { loading, data } = useQuery(GET_ALL_ARTICLES);
     const [selection, setSelection] = useState<undefined | IArticle>();
 
+    useEffect(() => {
+        const query = new URLSearchParams(window.location.search);
+        console.log(query.get('view'));
+      }, []);
+
     const onSelect = (news: IArticle) => {
-        window.open(news.url, "_blank");
-        // setSelection(news);
+        // window.open(news.url, "_blank");
+        setSelection(news);
     }
 
     if (loading) {

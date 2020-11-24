@@ -1,20 +1,21 @@
 import React from "react";
 import styled from "styled-components";
+import {useQuery, useSubscription} from "@apollo/client";
+import { GET_ACTIVE_VIEW } from "../apollo/viewer/actions";
 import { IArticle } from "../apollo/article/interface";
 
 const StyledViewer = styled.div`
     position: fixed;
     top: 0;
-    left: 0;
-    padding: 10px;
+    right: 0;
     height: 100%;
-    width: 100%;
-    background-color: rgba(10, 10, 10, 0.8);
+    width: calc(100% - 40px);
 
     iframe {
         position: relative;
-        width: calc(100% - 20px);
-        height: calc(100% - 20px);
+        width: 100%;
+        height: 100%;
+        border: none;
         z-index: 2;
     }
     .toolbar {
@@ -46,9 +47,13 @@ type ViewerProps = {
     onClose: Function
 };
 
-const Viewer = ({ article, onClose }: ViewerProps) => {
+const Viewer = ({ onClose, article }: ViewerProps) => {
+    const { loading, data } = useQuery(GET_ACTIVE_VIEW);
+
+    console.log(data);
+
     return (
-        <StyledViewer onClick={() => onClose()}>
+        <StyledViewer>
             <div className="spinner-border text-primary" role="status"></div>
             <div onClick={ev => ev.stopPropagation()} className="toolbar">
                 <button onClick={() => onClose()}>X</button>
