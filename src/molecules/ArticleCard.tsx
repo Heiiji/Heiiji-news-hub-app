@@ -11,13 +11,10 @@ const Article = styled.div`
     flex-direction: row;
     border-radius: 10px;
     overflow: hidden;
-    width: 90%;
-    max-width: 800px;
+    width: 500px;
     margin: 10px;
     text-decoration: none !important;
     background-color: #2B374A;
-    width: 100%;
-    max-width: 800px;
     h5 {
         color: ${({ theme }) => theme.primaryColor};
     }
