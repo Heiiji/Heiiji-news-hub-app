@@ -3,6 +3,7 @@ import {useQuery} from "@apollo/client";
 import {GET_ALL_ARTICLES} from "../apollo/article/actions";
 import Feed from "../organisms/Feed";
 import Viewer from "../organisms/Viewer";
+import SearchBar from "../organisms/SearchBar";
 import { IArticle } from "../apollo/article/interface";
 
 const Home = () => {
@@ -26,7 +27,10 @@ const Home = () => {
     }
 
     return (
-        <div>
+        <div style={{
+            marginTop: 400
+        }}>
+            <SearchBar/>
             <Feed feed={data.articles}/>
             <Viewer/>
         </div>
