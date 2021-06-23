@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import {useQuery} from "@apollo/client";
+import { ACTIVE_SEARCH } from "../apollo/system/actions";
 import styled from "styled-components";
 
 const StyledSearchBar = styled.form`
@@ -154,8 +156,17 @@ const StyledSearchBar = styled.form`
 `;
 
 const SearchBar = () => {
-    return (<StyledSearchBar><form action="" className="search-bar">
-        <input type="search" name="search" pattern=".*\S.*" placeholder="search" required/>
+    const { data } = useQuery(ACTIVE_SEARCH);
+    const [search, setSearch] = useState('');
+    console.log("search", data);
+
+    const onSubmit = (ev : React.FormEvent<HTMLFormElement>) => {
+      ev.preventDefault();
+
+    }
+
+    return (<StyledSearchBar><form onSubmit={onSubmit} action="" className="search-bar">
+        <input type="search" value={search} onChange={(ev => setSearch(ev.target.value))} name="search" pattern=".*\S.*" placeholder="search" required/>
             <button className="search-btn" type="submit">
                 <span>Search</span>
             </button>

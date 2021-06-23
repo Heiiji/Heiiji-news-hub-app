@@ -28,7 +28,7 @@ const Home = () => {
 
     return (
         <div style={{
-            marginTop: 400
+            marginTop: 100
         }}>
             <SearchBar/>
             <Feed feed={data.articles}/>

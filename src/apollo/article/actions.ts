@@ -25,3 +25,16 @@ export const GET_ARTICLE = gql`
         }
     }
 `;
+
+export const SEARCH_ARTICLES = gql`
+    query Article($id: String!) {
+        article(id: $id) {
+            id,
+            title,
+            description,
+            image,
+            url,
+            date
+        }
+    }
+`;

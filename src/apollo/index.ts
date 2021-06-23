@@ -40,6 +40,12 @@ export const client = new ApolloClient({
             },
             viewList() {
                 return localStorage.getItem("viewList");
+            },
+            search() {
+                return {
+                    query: "",
+                    tags: []
+                }
             }
         },
         Mutation: {
