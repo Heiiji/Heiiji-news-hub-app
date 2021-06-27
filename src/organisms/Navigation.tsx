@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import history from "../_helpers/history";
-import { useQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import Auth from "./Auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,8 +10,10 @@ import {
   faDoorOpen,
   faUserCircle,
   faSignOutAlt,
+  faShareAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { IS_LOGGED_IN } from "../apollo/user/actions";
+import { GET_ARTICLE } from "../apollo/article/actions";
 
 const NavBar = styled.div`
   background-color: #161a1a;
@@ -54,7 +56,18 @@ interface NavigationProps {
 
 const Navigation = ({ articleId }: NavigationProps) => {
   const [auth, setAuth] = useState(false);
+  const [loadArticle, articleQuery] = useLazyQuery(GET_ARTICLE, {
+    variables: {
+      id: articleId,
+    },
+  });
   const logged = useQuery(IS_LOGGED_IN);
+
+  useEffect(() => {
+    if (articleId) {
+      loadArticle();
+    }
+  }, [articleId, loadArticle]);
 
   if (logged.loading) {
     return <p> loading</p>;
@@ -69,6 +82,10 @@ const Navigation = ({ articleId }: NavigationProps) => {
     window.location.reload(false);
   };
 
+  function copyToClipboard() {
+    navigator.clipboard.writeText(articleQuery.data.article.url);
+  }
+
   return (
     <>
       <NavBar>
@@ -79,11 +96,14 @@ const Navigation = ({ articleId }: NavigationProps) => {
           <NavBtn onClick={() => onRedirect("/")}>
             <FontAwesomeIcon color="white" icon={faHome} />
           </NavBtn>
-          {articleId && (
+          {articleId && [
             <NavBtn onClick={() => onRedirect("/")}>
               <FontAwesomeIcon color="white" icon={faDoorOpen} />
-            </NavBtn>
-          )}
+            </NavBtn>,
+            <NavBtn onClick={() => copyToClipboard()}>
+              <FontAwesomeIcon color="white" icon={faShareAlt} />
+            </NavBtn>,
+          ]}
         </div>
         {logged.data.isLoggedIn ? (
           <div
