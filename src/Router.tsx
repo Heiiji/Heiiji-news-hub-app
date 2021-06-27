@@ -10,6 +10,9 @@ function Router() {
       <Route exact path="/">
         <Home />
       </Route>
+      <Route path="/article/:articleId">
+        <Home />
+      </Route>
       <Route path="/search">
         <Search />
       </Route>

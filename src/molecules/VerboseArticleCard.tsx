@@ -1,8 +1,7 @@
 import React from "react";
 import { IArticle } from "../apollo/article/interface";
-import { useMutation } from "@apollo/client";
-import { SET_ACTIVE_VIEW } from "../apollo/viewer/actions";
 import styled from "styled-components";
+import history from "../_helpers/history";
 
 const VerboseArticle = styled.div`
   transition: 0.3s;
@@ -38,8 +37,6 @@ type VerboseArticleCardProps = {
 };
 
 const VerboseArticleCard = ({ article, onSelect }: VerboseArticleCardProps) => {
-  const [setActiveView] = useMutation(SET_ACTIVE_VIEW);
-
   const milliseconds = article.date; // 1575909015000
 
   const dateObject = new Date(milliseconds);
@@ -47,10 +44,8 @@ const VerboseArticleCard = ({ article, onSelect }: VerboseArticleCardProps) => {
   const humanDateFormat = dateObject.toLocaleString();
 
   const _onClick = () => {
-    let id = article.id;
-    setActiveView({ variables: { id } }).catch((err) => {
-      console.error(err);
-    });
+    const id = article.id;
+    history.push(`/article/${id}`);
     if (onSelect) {
       onSelect(article);
     }

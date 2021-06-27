@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useQuery, useMutation } from "@apollo/client";
-import { GET_ACTIVE_VIEW, SET_ACTIVE_VIEW } from "../apollo/viewer/actions";
+import { useQuery } from "@apollo/client";
+import { GET_ARTICLE } from "../apollo/article/actions";
 
 const StyledViewer = styled.div`
   position: fixed;
@@ -35,7 +35,7 @@ const StyledViewer = styled.div`
   }
 
   @media screen and (max-width: 1000px) {
-    padding: 0px;
+    padding: 0;
     iframe {
       width: 100%;
       height: 100%;
@@ -43,19 +43,18 @@ const StyledViewer = styled.div`
   }
 `;
 
-const Viewer = () => {
-  const [setActiveView] = useMutation(SET_ACTIVE_VIEW);
-  const { data } = useQuery(GET_ACTIVE_VIEW, {
-    pollInterval: 600,
+interface ViewerParams {
+  id: string;
+}
+
+const Viewer = ({ id }: ViewerParams) => {
+  const { data } = useQuery(GET_ARTICLE, {
+    variables: {
+      id,
+    },
   });
 
-  const _onClose = () => {
-    setActiveView().catch((err) => {
-      console.error(err);
-    });
-  };
-
-  if (!data || !data.activeView) {
+  if (!data || !data.article) {
     return <div />;
   }
 
@@ -66,7 +65,7 @@ const Viewer = () => {
         onClick={(ev) => ev.stopPropagation()}
         id="inlineFrameExample"
         title="viewer"
-        src={data.activeView.url}
+        src={data.article.url}
       ></iframe>
     </StyledViewer>
   );

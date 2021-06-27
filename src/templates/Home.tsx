@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { GET_ALL_ARTICLES, SEARCH_ARTICLES } from "../apollo/article/actions";
 import Feed from "../organisms/Feed";
-import Viewer from "../organisms/Viewer";
 import SearchBar from "../organisms/SearchBar";
 // import { IArticle } from "../apollo/article/interface";
 
@@ -52,7 +51,6 @@ const Home = ({ search }: HomeProps) => {
       <Feed
         feed={search.query ? SearchResult.data.searchArticles : data.articles}
       />
-      <Viewer />
     </div>
   );
 };

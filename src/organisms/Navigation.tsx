@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import history from "../_helpers/history";
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import Auth from "./Auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,14 +12,13 @@ import {
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { IS_LOGGED_IN } from "../apollo/user/actions";
-import { GET_ACTIVE_VIEW, SET_ACTIVE_VIEW } from "../apollo/viewer/actions";
 
 const NavBar = styled.div`
   background-color: #161a1a;
   width: 40px;
   position: fixed;
   flex-direction: column;
-  padding: 10px 0px;
+  padding: 10px 12px;
   top: 0;
   left: 0;
   height: 100%;
@@ -40,7 +39,7 @@ const NavBar = styled.div`
 const NavBtn = styled.div`
   transition: 0.3s;
   cursor: pointer;
-  padding: 5px 0px;
+  padding: 5px 12px;
   width: 40px;
   text-align: center;
 
@@ -49,11 +48,11 @@ const NavBtn = styled.div`
   }
 `;
 
-const Navigation = () => {
-  const [setActiveView] = useMutation(SET_ACTIVE_VIEW);
-  const ActiveViewQuery = useQuery(GET_ACTIVE_VIEW, {
-    pollInterval: 600,
-  });
+interface NavigationProps {
+  articleId?: string;
+}
+
+const Navigation = ({ articleId }: NavigationProps) => {
   const [auth, setAuth] = useState(false);
   const logged = useQuery(IS_LOGGED_IN);
 
@@ -70,12 +69,6 @@ const Navigation = () => {
     window.location.reload(false);
   };
 
-  const _onCloseWebview = () => {
-    setActiveView().catch((err) => {
-      console.error(err);
-    });
-  };
-
   return (
     <>
       <NavBar>
@@ -86,8 +79,8 @@ const Navigation = () => {
           <NavBtn onClick={() => onRedirect("/")}>
             <FontAwesomeIcon color="white" icon={faHome} />
           </NavBtn>
-          {ActiveViewQuery.data?.activeView && (
-            <NavBtn onClick={() => _onCloseWebview()}>
+          {articleId && (
+            <NavBtn onClick={() => onRedirect("/")}>
               <FontAwesomeIcon color="white" icon={faDoorOpen} />
             </NavBtn>
           )}

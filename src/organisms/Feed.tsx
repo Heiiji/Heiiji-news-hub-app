@@ -19,7 +19,6 @@ type FeedProps = {
 };
 
 const Feed = ({ feed }: FeedProps) => {
-  console.log("feed", feed);
   return (
     <StyledFeed>
       {feed.map((article) =>
