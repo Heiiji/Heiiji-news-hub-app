@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import {useQuery} from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { activeSearchVar } from "../apollo";
 import { ACTIVE_SEARCH } from "../apollo/system/actions";
 import styled from "styled-components";
 
 const StyledSearchBar = styled.div`
-  button, input {
+  button,
+  input {
     font: 1em Hind, sans-serif;
     line-height: 1.5em;
   }
@@ -13,7 +14,9 @@ const StyledSearchBar = styled.div`
     color: #f1f1f1;
   }
 
-  .search-bar {display: flex;}
+  .search-bar {
+    display: flex;
+  }
 
   .search-bar input,
   .search-btn,
@@ -157,31 +160,39 @@ const StyledSearchBar = styled.div`
 `;
 
 const SearchBar = () => {
-    const { data } = useQuery(ACTIVE_SEARCH);
-    const [search, setSearch] = useState('');
+  const { data } = useQuery(ACTIVE_SEARCH);
+  const [search, setSearch] = useState("");
 
-    useEffect(() => {
-        if (data) {
-            setSearch(data.search.query);
-        }
-    }, [data])
-
-    const _onSubmit = (ev : React.FormEvent<HTMLFormElement>) => {
-      ev.preventDefault();
-      activeSearchVar({
-          ...activeSearchVar(),
-          query: search
-      });
+  useEffect(() => {
+    if (data) {
+      setSearch(data.search.query);
     }
+  }, [data]);
 
-    return (<StyledSearchBar>
-        <form onSubmit={_onSubmit} action="" className="search-bar">
-            <input type="search" value={search} onChange={(ev => setSearch(ev.target.value))} name="search" placeholder="search"/>
-            <button className="search-btn" type="submit">
-                <span>Search</span>
-            </button>
-        </form>
-    </StyledSearchBar>);
-}
+  const _onSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
+    ev.preventDefault();
+    activeSearchVar({
+      ...activeSearchVar(),
+      query: search,
+    });
+  };
+
+  return (
+    <StyledSearchBar>
+      <form onSubmit={_onSubmit} action="" className="search-bar">
+        <input
+          type="search"
+          value={search}
+          onChange={(ev) => setSearch(ev.target.value)}
+          name="search"
+          placeholder="search"
+        />
+        <button className="search-btn" type="submit">
+          <span>Search</span>
+        </button>
+      </form>
+    </StyledSearchBar>
+  );
+};
 
 export default SearchBar;

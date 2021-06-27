@@ -11,7 +11,7 @@ declare module "styled-components" {
 
 export const darkTheme: DefaultTheme = {
   textColor: "#fff",
-	primaryColor: "#38BCFF",
+  primaryColor: "#38BCFF",
   secondaryColor: "#31313C",
   tertiaryColor: "#282834",
 };

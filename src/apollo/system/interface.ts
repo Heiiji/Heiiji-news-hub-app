@@ -1,4 +1,4 @@
 export interface ISearch {
-    query: string,
-    tags: Array<string>
+  query: string;
+  tags: Array<string>;
 }

@@ -1,12 +1,9 @@
 import { createContext } from "react";
 
 const defaultValue = {
-    search: ""
+  search: "",
 };
 
 const context = createContext(defaultValue);
 
-export {
-    defaultValue,
-    context
-}
+export { defaultValue, context };

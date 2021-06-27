@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/client";
 import { SET_ACTIVE_VIEW } from "../apollo/viewer/actions";
 import styled from "styled-components";
 
-const Article = styled.div`
+const VerboseArticle = styled.div`
   transition: 0.3s;
   cursor: pointer;
   display: flex;
@@ -18,17 +18,10 @@ const Article = styled.div`
   h5 {
     color: ${({ theme }) => theme.primaryColor};
   }
-  img {
-    width: 150px;
-    height: 150px;
-    margin: 15px;
-    object-fit: cover;
-    border-radius: 5px;
-  }
   .description {
     text-align: left;
-    padding: 10px;
-    max-height: 160px;
+    padding: 15px;
+    height: 180px;
     overflow: hidden;
     p {
       color: rgb(220, 220, 220);
@@ -39,12 +32,12 @@ const Article = styled.div`
   }
 `;
 
-type ArticleCardProps = {
+type VerboseArticleCardProps = {
   article: IArticle;
   onSelect?: Function;
 };
 
-const ArticleCard = ({ article, onSelect }: ArticleCardProps) => {
+const VerboseArticleCard = ({ article, onSelect }: VerboseArticleCardProps) => {
   const [setActiveView] = useMutation(SET_ACTIVE_VIEW);
 
   const milliseconds = article.date; // 1575909015000
@@ -64,11 +57,7 @@ const ArticleCard = ({ article, onSelect }: ArticleCardProps) => {
   };
 
   return (
-    <Article onClick={_onClick}>
-      <img
-        alt="illustration"
-        src={article.image ? article.image : "/media/images/rss.png"}
-      />
+    <VerboseArticle onClick={_onClick}>
       <div className="description">
         <h5>{article.title}</h5>
         <small>{humanDateFormat}</small>
@@ -78,8 +67,8 @@ const ArticleCard = ({ article, onSelect }: ArticleCardProps) => {
             : article.description.substring(0, 150) + "..."}
         </p>
       </div>
-    </Article>
+    </VerboseArticle>
   );
 };
 
-export default ArticleCard;
+export default VerboseArticleCard;
