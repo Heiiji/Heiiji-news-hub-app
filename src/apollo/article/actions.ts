@@ -27,8 +27,8 @@ export const GET_ARTICLE = gql`
 `;
 
 export const SEARCH_ARTICLES = gql`
-    query Article($id: String!) {
-        article(id: $id) {
+    query SearchArticles($search: String!) {
+        searchArticles(search: $search) {
             id,
             title,
             description,

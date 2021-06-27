@@ -1,8 +1,25 @@
-import {ApolloClient, HttpLink, InMemoryCache} from '@apollo/client';
+import {ApolloClient, HttpLink, InMemoryCache, makeVar} from '@apollo/client';
 import { GET_ARTICLE } from './article/actions';
 import { IArticle } from './article/interface';
 
-const cache = new InMemoryCache();
+export const activeSearchVar = makeVar({
+    query: "",
+    tags: []
+});
+
+const cache = new InMemoryCache({
+    typePolicies: {
+        Query: {
+            fields: {
+                search: {
+                    read() {
+                        return activeSearchVar();
+                    }
+                },
+            },
+        }
+    }
+});
 
 // const API_BASE_URL = "https://api.centre-actu.app/graphql";
 const API_BASE_URL = "http://localhost:3001/graphql";
@@ -41,12 +58,6 @@ export const client = new ApolloClient({
             viewList() {
                 return localStorage.getItem("viewList");
             },
-            search() {
-                return {
-                    query: "",
-                    tags: []
-                }
-            }
         },
         Mutation: {
             setActiveView(_, variables) {
