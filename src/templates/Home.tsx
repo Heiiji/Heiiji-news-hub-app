@@ -33,7 +33,7 @@ const Home = ({ search }: HomeProps) => {
     } else {
       loadAll();
     }
-  }, [search]);
+  }, [search, loadAll, loadSearch]);
 
   if (loading || SearchResult.loading) {
     return <p>Loading</p>;

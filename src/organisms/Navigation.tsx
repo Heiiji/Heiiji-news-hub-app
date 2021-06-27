@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import history from "../_helpers/history";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import Auth from "./Auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCoffee,
   faHome,
-  faPlus,
+  faDoorOpen,
   faUserCircle,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { IS_LOGGED_IN } from "../apollo/user/actions";
+import { GET_ACTIVE_VIEW, SET_ACTIVE_VIEW } from "../apollo/viewer/actions";
 
 const NavBar = styled.div`
   background-color: #161a1a;
@@ -49,6 +50,10 @@ const NavBtn = styled.div`
 `;
 
 const Navigation = () => {
+  const [setActiveView] = useMutation(SET_ACTIVE_VIEW);
+  const ActiveViewQuery = useQuery(GET_ACTIVE_VIEW, {
+    pollInterval: 600,
+  });
   const [auth, setAuth] = useState(false);
   const logged = useQuery(IS_LOGGED_IN);
 
@@ -65,6 +70,12 @@ const Navigation = () => {
     window.location.reload(false);
   };
 
+  const _onCloseWebview = () => {
+    setActiveView().catch((err) => {
+      console.error(err);
+    });
+  };
+
   return (
     <>
       <NavBar>
@@ -75,9 +86,11 @@ const Navigation = () => {
           <NavBtn onClick={() => onRedirect("/")}>
             <FontAwesomeIcon color="white" icon={faHome} />
           </NavBtn>
-          <NavBtn onClick={() => onRedirect("/search")}>
-            <FontAwesomeIcon color="white" icon={faPlus} />
-          </NavBtn>
+          {ActiveViewQuery.data?.activeView && (
+            <NavBtn onClick={() => _onCloseWebview()}>
+              <FontAwesomeIcon color="white" icon={faDoorOpen} />
+            </NavBtn>
+          )}
         </div>
         {logged.data.isLoggedIn ? (
           <div

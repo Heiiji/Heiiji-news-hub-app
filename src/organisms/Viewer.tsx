@@ -8,10 +8,12 @@ const StyledViewer = styled.div`
   top: 0;
   right: 0;
   height: 100%;
-  width: calc(100% - 40px);
+  width: calc(100% - 43px);
 
   iframe {
-    position: relative;
+    position: absolute;
+    right: 0;
+    top: 0;
     width: 100%;
     height: 100%;
     border: none;
@@ -20,7 +22,7 @@ const StyledViewer = styled.div`
   .toolbar {
     position: absolute;
     top: 0;
-    height: 20px;
+    height: 0px;
     background-color: white;
     right: 10px;
   }
@@ -44,7 +46,7 @@ const StyledViewer = styled.div`
 const Viewer = () => {
   const [setActiveView] = useMutation(SET_ACTIVE_VIEW);
   const { data } = useQuery(GET_ACTIVE_VIEW, {
-    pollInterval: 1000,
+    pollInterval: 600,
   });
 
   const _onClose = () => {
@@ -60,9 +62,6 @@ const Viewer = () => {
   return (
     <StyledViewer>
       <div className="spinner-border text-primary" role="status"></div>
-      <div onClick={(ev) => ev.stopPropagation()} className="toolbar">
-        <button onClick={_onClose}>X</button>
-      </div>
       <iframe
         onClick={(ev) => ev.stopPropagation()}
         id="inlineFrameExample"
