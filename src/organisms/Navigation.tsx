@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactTooltip from "react-tooltip";
 import styled from "styled-components";
 import history from "../_helpers/history";
 import { useLazyQuery, useQuery } from "@apollo/client";
@@ -39,6 +40,7 @@ const NavBar = styled.div`
 `;
 
 const NavBtn = styled.div`
+  position: relative;
   transition: 0.3s;
   cursor: pointer;
   padding: 5px 12px;
@@ -56,6 +58,7 @@ interface NavigationProps {
 
 const Navigation = ({ articleId }: NavigationProps) => {
   const [auth, setAuth] = useState(false);
+  const [copiedState, setCopiedState] = useState(false);
   const [loadArticle, articleQuery] = useLazyQuery(GET_ARTICLE, {
     variables: {
       id: articleId,
@@ -64,6 +67,7 @@ const Navigation = ({ articleId }: NavigationProps) => {
   const logged = useQuery(IS_LOGGED_IN);
 
   useEffect(() => {
+    ReactTooltip.rebuild();
     if (articleId) {
       loadArticle();
     }
@@ -83,7 +87,13 @@ const Navigation = ({ articleId }: NavigationProps) => {
   };
 
   function copyToClipboard() {
+    setCopiedState(true);
+    ReactTooltip.rebuild();
     navigator.clipboard.writeText(articleQuery.data.article.url);
+    setTimeout(() => {
+      setCopiedState(false);
+      ReactTooltip.rebuild();
+    }, 500);
   }
 
   return (
@@ -100,7 +110,12 @@ const Navigation = ({ articleId }: NavigationProps) => {
             <NavBtn onClick={() => onRedirect("/")}>
               <FontAwesomeIcon color="white" icon={faDoorOpen} />
             </NavBtn>,
-            <NavBtn onClick={() => copyToClipboard()}>
+            <NavBtn
+              onClick={() => copyToClipboard()}
+              data-bs-placement="right"
+              data-tip={copiedState ? "copied" : "Copy to clipboard"}
+              data-for="copy"
+            >
               <FontAwesomeIcon color="white" icon={faShareAlt} />
             </NavBtn>,
           ]}
@@ -109,6 +124,9 @@ const Navigation = ({ articleId }: NavigationProps) => {
           <div
             onClick={onLoggout}
             style={{ height: "fit-content", cursor: "pointer" }}
+            data-for="main"
+            data-tip="Hello<br />multiline<br />tooltip"
+            data-iscapture="true"
           >
             <FontAwesomeIcon color="white" icon={faSignOutAlt} />
           </div>
@@ -122,6 +140,14 @@ const Navigation = ({ articleId }: NavigationProps) => {
         )}
       </NavBar>
       <Auth active={auth} toggle={() => setAuth(!auth)} />
+      <ReactTooltip
+        id="copy"
+        place="right"
+        type="dark"
+        effect="solid"
+        multiline={false}
+        getContent={() => (copiedState ? "Copied" : "Copy to clipboard")}
+      />
     </>
   );
 };

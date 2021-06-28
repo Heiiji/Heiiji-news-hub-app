@@ -18,6 +18,7 @@ const StyledViewer = styled.div`
     height: 100%;
     border: none;
     z-index: 2;
+    background-color: white;
   }
   .toolbar {
     position: absolute;
