@@ -97,7 +97,9 @@ const Auth = ({ toggle, active }: AuthProps) => {
   const onSignup = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
     if (email && password && password === confirm) {
-      signup({ variables: { email, password, username: "default" } })
+      signup({
+        variables: { email, password, username: "default" + Date.now() },
+      })
         .then((response) => {
           console.log(response.data);
         })

@@ -12,6 +12,7 @@ import {
   faUserCircle,
   faSignOutAlt,
   faShareAlt,
+  faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
 import { IS_LOGGED_IN } from "../apollo/user/actions";
 import { GET_ARTICLE } from "../apollo/article/actions";
@@ -119,6 +120,11 @@ const Navigation = ({ articleId }: NavigationProps) => {
               <FontAwesomeIcon color="white" icon={faShareAlt} />
             </NavBtn>,
           ]}
+          {logged.data.isLoggedIn && (
+            <NavBtn onClick={() => copyToClipboard()}>
+              <FontAwesomeIcon color="white" icon={faGlobe} />
+            </NavBtn>
+          )}
         </div>
         {logged.data.isLoggedIn ? (
           <div
