@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Search from "./pages/Search";
+import Sources from "./pages/Sources";
 
 function Router() {
   return (
@@ -12,6 +13,9 @@ function Router() {
       </Route>
       <Route path="/article/:articleId">
         <Home />
+      </Route>
+      <Route path="/sources">
+        <Sources />
       </Route>
       <Route path="/search">
         <Search />

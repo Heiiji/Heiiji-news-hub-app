@@ -121,7 +121,7 @@ const Navigation = ({ articleId }: NavigationProps) => {
             </NavBtn>,
           ]}
           {logged.data.isLoggedIn && (
-            <NavBtn onClick={() => copyToClipboard()}>
+            <NavBtn onClick={() => onRedirect("/sources")}>
               <FontAwesomeIcon color="white" icon={faGlobe} />
             </NavBtn>
           )}
