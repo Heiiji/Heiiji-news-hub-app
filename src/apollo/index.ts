@@ -1,5 +1,4 @@
 import { ApolloClient, HttpLink, InMemoryCache, makeVar } from "@apollo/client";
-import { GET_ARTICLE } from "./article/actions";
 import { IArticle } from "./article/interface";
 
 export const activeSearchVar = makeVar({
@@ -34,16 +33,6 @@ const httpLink = new HttpLink({
   },
 });
 
-const _onSetActiveView = (id: String) => {
-  if (!id) {
-    activeView = null;
-    return;
-  }
-  client.query({ query: GET_ARTICLE, variables: { id } }).then((result) => {
-    activeView = result.data.article;
-  });
-};
-
 export const client = new ApolloClient({
   link: httpLink,
   cache,
@@ -59,12 +48,7 @@ export const client = new ApolloClient({
         return localStorage.getItem("viewList");
       },
     },
-    Mutation: {
-      setActiveView(_, variables) {
-        const id = variables.input.id;
-        _onSetActiveView(id);
-      },
-    },
+    Mutation: {},
     Subscription: {},
   },
 });

@@ -1,0 +1,121 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Article {
+    author: String
+    content: String
+    date: DateTime!
+    description: String
+    id: ID!
+    image: String
+    tags: [String!]
+    thread: Thread
+    title: String!
+    url: String!
+}
+
+type Mutation {
+    _: String
+    changePassword(input: changePasswordInput): User
+    createSource(url: String!): Source
+    createThread(url: String!): Thread
+    login(input: loginInput): Token
+    signup(input: signupInput): User
+    subscribe(input: subscribeInput): User
+}
+
+type Query {
+    _: String
+    article(id: String!): Article
+    articles: [Article!]
+    searchArticles(search: String!): [Article!]
+    source(id: ID!): Source
+    sources: [Source!]
+    thread(id: ID!): Thread
+    threads: [Thread!]
+    user: User
+}
+
+type Source {
+    description: String
+    domain: String
+    id: ID!
+    image: String
+    language: String
+    name: String!
+    private: Boolean
+    status: String
+    tags: [String!]
+    url: String!
+}
+
+type Thread {
+    description: String
+    domain: String
+    id: ID!
+    image: String
+    language: String
+    name: String!
+    private: Boolean
+    status: String
+    subscribers: [User!]
+    tags: [String!]
+    url: String!
+}
+
+type Token {
+    token: String!
+}
+
+type User {
+    createdAt: DateTime!
+    email: String!
+    id: ID!
+    subscriptions: [Thread]
+    updatedAt: DateTime!
+    username: String
+}
+
+enum CacheControlScope {
+    PRIVATE
+    PUBLIC
+}
+
+input changePasswordInput {
+    oldPassword: String!
+    password: String!
+}
+
+input createSourceInput {
+    url: String!
+}
+
+input createThreadInput {
+    url: String!
+}
+
+input loginInput {
+    email: String!
+    password: String!
+}
+
+input signupInput {
+    email: String!
+    password: String!
+    username: String!
+}
+
+input subscribeInput {
+    threadId: String!
+}
+
+
+"A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar."
+scalar DateTime
+
+"The `Upload` scalar type represents a file upload."
+scalar Upload

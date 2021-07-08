@@ -31,3 +31,27 @@ export const IS_LOGGED_IN = gql`
     isLoggedIn @client
   }
 `;
+
+export const GET_ME = gql`
+  query Me {
+    user {
+      id
+      username
+      email
+      subscriptions {
+        id
+        description
+        url
+        name
+      }
+    }
+  }
+`;
+
+export default {
+  LOGIN,
+  SIGNUP,
+  CHANGE_PASSWORD,
+  IS_LOGGED_IN,
+  GET_ME,
+};
