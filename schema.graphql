@@ -31,7 +31,7 @@ type Mutation {
 type Query {
     _: String
     article(id: String!): Article
-    articles: [Article!]
+    articles(limit: Int): [Article!]
     searchArticles(search: String!): [Article!]
     source(id: ID!): Source
     sources: [Source!]

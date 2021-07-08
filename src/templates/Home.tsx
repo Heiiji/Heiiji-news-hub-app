@@ -15,7 +15,11 @@ type HomeProps = {
 };
 
 const Home = ({ search }: HomeProps) => {
-  const [loadAll, { loading, data }] = useLazyQuery(GET_ALL_ARTICLES);
+  const [loadAll, allArticles] = useLazyQuery(GET_ALL_ARTICLES, {
+    variables: {
+      limit: 30,
+    },
+  });
   const [loadSearch, SearchResult] = useLazyQuery(SEARCH_ARTICLES, {
     variables: {
       search: search.query,
@@ -34,10 +38,13 @@ const Home = ({ search }: HomeProps) => {
     }
   }, [search, loadAll, loadSearch]);
 
-  if (loading || SearchResult.loading) {
+  if (allArticles.loading || SearchResult.loading) {
     return <p>Loading</p>;
   }
-  if ((!search.query && !data) || (search.query && !SearchResult.data)) {
+  if (
+    (!search.query && !allArticles.data) ||
+    (search.query && !SearchResult.data)
+  ) {
     return <p>Error</p>;
   }
 
@@ -49,7 +56,11 @@ const Home = ({ search }: HomeProps) => {
     >
       <SearchBar />
       <Feed
-        feed={search.query ? SearchResult.data.searchArticles : data.articles}
+        feed={
+          search.query
+            ? SearchResult.data.searchArticles
+            : allArticles.data.articles
+        }
       />
     </div>
   );

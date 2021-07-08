@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const GET_ALL_ARTICLES = gql`
-  query Articles {
-    articles {
+  query Articles($limit: Int) {
+    articles(limit: $limit) {
       id
       title
       description
