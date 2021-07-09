@@ -1,4 +1,11 @@
-import { ApolloClient, HttpLink, InMemoryCache, makeVar } from "@apollo/client";
+import {
+  ApolloClient,
+  from,
+  HttpLink,
+  InMemoryCache,
+  makeVar,
+} from "@apollo/client";
+import { onError } from "@apollo/client/link/error";
 import { IArticle } from "./article/interface";
 
 export const activeSearchVar = makeVar({
@@ -33,8 +40,20 @@ const httpLink = new HttpLink({
   },
 });
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    graphQLErrors.forEach(({ extensions }) => {
+      if (extensions?.code === "403") {
+        localStorage.removeItem("token"); // TODO : Rework token flow
+        window.location.reload(false);
+      }
+    });
+  }
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});
+
 export const client = new ApolloClient({
-  link: httpLink,
+  link: from([errorLink, httpLink]),
   cache,
   resolvers: {
     Query: {
