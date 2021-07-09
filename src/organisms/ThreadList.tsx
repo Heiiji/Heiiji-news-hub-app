@@ -9,8 +9,31 @@ const StyledThreadList = styled.div`
 
   .thread {
     padding: 10px;
-    margin: 0 50px;
+    margin: 10px 50px;
     text-align: left;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    background-color: rgba(10, 10, 10, 0.2);
+    border-radius: 10px;
+    .mainline {
+      padding-bottom: 10px;
+    }
+    img {
+      float: left;
+      height: 50px;
+      margin: 0 10px 0 0;
+    }
+    .thread-name {
+      font-size: 1.2em;
+      display: block;
+    }
+    .thread-url {
+      transition: 0.3s;
+      text-decoration: none;
+      color: aliceblue;
+      :hover {
+        color: grey;
+      }
+    }
   }
 `;
 
@@ -24,7 +47,19 @@ const ThreadList = ({ threads }: FeedProps) => {
       <h1>Sources list</h1>
       {threads.map((thread) => (
         <div className="thread">
-          <b>{thread.name}</b> : ({thread.url})
+          <div className="mainline">
+            {thread.image && <img alt="illustration" src={thread.image} />}
+            <span className="thread-name">{thread.name}</span>
+            <a
+              className="thread-url"
+              target="_blank"
+              href={thread.domain}
+              rel="noreferrer"
+            >
+              {thread.domain}
+            </a>
+          </div>
+          <span className="thread-description">{thread.description}</span>
         </div>
       ))}
     </StyledThreadList>
